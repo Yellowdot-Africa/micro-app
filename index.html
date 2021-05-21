@@ -8,15 +8,60 @@
             margin-left: auto;
             margin-right: auto;
         }
+        
+        input[type=text] {
+            border: 1px solid #ffcb06;
+            border-radius: 3px;
+            padding-left: 0.5rem;
+            min-width: 15rem;
+            height: 2.5rem;
+            margin: 10rem 0 0 0;
+        }
+        
+        input[type=button] {
+            border: 1px solid #ffcb06;
+            border-radius: 3px;
+            padding-left: 0.5rem;
+            min-width: 15rem;
+            height: 2.5rem;
+            cursor: pointer;
+        }
     </style>
 </head>
+<script src="../lib/microapp.js"></script>
+<script type="text/javascript">
+    function getMsisdn() {
+        var msisdn = Ayoba.getMsisdn();
+        // document.getElementById("inputText").value = msisdn;
+        return msisdn;
+    }
 
-<body style="background-color:#1565c0;">
-    <script src="../lib/microapp.js"></script>
-    <script>
-        sayHello()
-    </script>
-    <img src="logo.png" style="width:72px;" />
+
+    function composeMessage() {
+        Ayoba.composeMessage(document.getElementById("inputText").value);
+        Ayoba.finish();
+    }
+
+    function sendMessage() {
+        Ayoba.sendMessage(document.getElementById("inputText").value);
+        Ayoba.finish();
+    }
+</script>
+
+<body style="background-color:#fff;">
+    <img src="logo.jpg" style="width:200pxpx;" />
+
+    <div class="container-content">
+        <div style="text-align:center;">
+            <input type="text" id="inputText">
+        </div>
+        <br />
+
+        <div style="text-align:center;">
+            <input type="button" value="Send message" onClick="sendMessage()" />
+        </div>
+    </div>
+
 </body>
 
 </html>

@@ -183,17 +183,17 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'msisdn': msisdn,
+                'msisdn': msisdn.toString(),
                 'ServiceID': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
                 'ChannelID': "105"
             })
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            console.log(data);
-            if (data.details.status === true) {
-                alert('Successful, Kindly Accept Auto-renew.');
+            if (data.status === 400) {
+                alert('Unable to subscribe, Try Later');
             }
+            alert('Successful, Kindly accept Auto Renew')
 
         }).catch(function(error) {
             console.log('Looks like there was a problem: \n', error);
@@ -223,7 +223,6 @@
                     </div>
                 </div>
             </form>
-            <p id="demo"></p>
         </div>
     </div>
 </body>

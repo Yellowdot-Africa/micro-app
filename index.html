@@ -1,229 +1,301 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
         img {
             display: block;
             margin-left: auto;
             margin-right: auto;
         }
-        
-        input[type=text] {
-            border: 1px solid #ffcb06;
-            border-radius: 3px;
-            padding-left: 0.5rem;
-            min-width: 15rem;
-            height: 2.5rem;
-            margin: 10rem 0 0 0;
-        }
-        
-        h2 {
-            text-align: center;
-            margin-left: 68px;
-        }
-        
-        .btn-container {
-            height: 80px;
-            position: relative;
-        }
-        
-        .center {
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-40%, -50%);
-        }
-        
-        .button {
-            border: 1px solid #ffcb06;
-            background: #ffcb06;
-            border-radius: 3px;
-            padding-left: 0.5rem;
-            min-width: 15rem;
-            height: 2.5rem;
-            cursor: pointer;
-        }
-        
-        .package-container {
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/opacity/see-through */
-            color: white;
-            font-weight: bold;
-            border: 3px solid #f1f1f1;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            width: 34%;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .package-container {
-                width: 130%;
-                z-index: 0;
-            }
-            .checkmark {
-                left: 0;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .package-container {
-                width: 100%;
-                z-index: 0;
-            }
-            .checkmark {
-                left: 0;
-            }
-        }
-        
-        form {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-        /* The container */
-        
-        .label-container {
-            display: block;
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 25px;
-            margin-right: 45px;
-            cursor: pointer;
-            font-size: 22px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        /* Hide the browser's default radio button */
-        
-        .label-container input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-        /* Create a custom radio button */
-        
-        .checkmark {
-            position: absolute;
-            top: 0;
-            left: 77px;
-            height: 25px;
-            width: 25px;
-            background-color: #eee;
-            border-radius: 50%;
-        }
-        /* On mouse-over, add a grey background color */
-        
-        .label-container:hover input~.checkmark {
-            background-color: #ccc;
-        }
-        /* When the radio button is checked, add a blue background */
-        
-        .label-container input:checked~.checkmark {
-            background-color: #2196F3;
-        }
-        /* Create the indicator (the dot/circle - hidden when not checked) */
-        
-        .checkmark:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-        /* Show the indicator (dot/circle) when checked */
-        
-        .label-container input:checked~.checkmark:after {
-            display: block;
-        }
-        /* Style the indicator (dot/circle) */
-        
-        .label-container .checkmark:after {
-            top: 9px;
-            left: 9px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: white;
-        }
     </style>
 </head>
 <script src="./lib/microapp.js"></script>
-<script type="text/javascript">
-    async function getPricePoints() {
-        const msisdn = Ayoba.getMsisdn();
-        let serviceIdTen = "526";
-        let serviceIdFifty = "322";
-        let selectedValue = document.querySelector('input[name="radio"]:checked').value;
-        await fetch(`https://micro-app-be.herokuapp.com/api/v1/subscribe`, {
-            method: 'POST',
-            headers: {
-                'cpid': 11,
-                'x-token': 'NJ06A666-741F-484E-AEC9-8B91D2CP',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'msisdn': msisdn.toString(),
-                'ServiceID': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
-                'ChannelID': "105"
-            })
-        }).then((data) => {
-            return data.json();
-        }).then((data) => {
-            if (data.status === 400) {
-                alert('Unable to subscribe, Try Later');
-            }
-            alert('Successful, Kindly accept Auto Renew')
+<script>
+    /* *********************************************************************
+     * Microapp operational examples. Follow the docs for more detailed info
+     * ******************************************************************** */
 
-        }).catch(function(error) {
-            console.log('Looks like there was a problem: \n', error);
-        });
+    function finish() {
+        Ayoba.finish();
+    }
+
+    function sendMessage() {
+        Ayoba.sendMessage(document.getElementById("inputText").value);
+        Ayoba.finish();
+    }
+
+    function composeMessage() {
+        Ayoba.composeMessage(document.getElementById("inputText").value);
+        Ayoba.finish();
+    }
+
+    function sendMedia() {
+        Ayoba.sendMedia('https://i.ytimg.com/vi/d5PP4vIX7P8/maxresdefault.jpg', 'image/jpg');
+    }
+
+    function sendLocation() {
+        Ayoba.sendLocation(document.getElementById("inputTextLat").value, document.getElementById("inputTextLon").value);
+    }
+
+    function getCountry() {
+        var country = Ayoba.getCountry();
+        document.getElementById("inputText").value = country
+        return country
+    }
+
+    function getMsisdn() {
+        var msisdn = Ayoba.getMsisdn();
+        document.getElementById("inputText").value = msisdn
+        return msisdn
+    }
+
+    function getCanSendMessage() {
+        var canSendMessage = Ayoba.getCanSendMessage();
+        document.getElementById("inputText").value = canSendMessage
+        return canSendMessage
+    }
+
+    function getLanguage() {
+        var language = Ayoba.getLanguage();
+        document.getElementById("inputText").value = language
+        return language
+    }
+
+    function getLastTextMessages() {
+        var test = Ayoba.getLastTextMessages();
+        document.getElementById("inputText").value = test
+        return test
+    }
+
+    function getURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    }
+
+    function getSelfJid() {
+        var selfJid = getURLParameter("jid")
+        document.getElementById("inputText").value = selfJid
+        return selfJid
+    }
+
+    function getContactJid() {
+        var contactJid = getURLParameter("contactjid")
+        document.getElementById("inputText").value = contactJid
+        return contactJid
+    }
+
+    function getContactName() {
+        var contactName = getURLParameter("contactname")
+        document.getElementById("inputText").value = contactName
+        return contactName
+    }
+
+    function getContacts() {
+        var contactsJson = Ayoba.getContacts();
+        document.getElementById("inputText").value = contactsJson
+        return contactsJson;
+    }
+
+    /*
+     * The Ayoba native interface calls this method every time
+     * the app receives a new location event.
+     *
+     * Remember this listener will only be called when the native
+     * permission is accepted by the user.
+     *
+     * In some border cases, also can receive lat=0.0, lon=0.0. Most of
+     * cases, will mean Ayoba cannot retrieve the GPS coordinates.
+     */
+    function onLocationChanged(lat, lon) {
+        document.getElementById("locationInputText").value = lat.concat(", ").concat(lon)
+    }
+
+    /*
+     * The Ayoba native interface calls this method every time
+     * the user profile changes (nickname or avatar) : in chat context
+     */
+    function onProfileChanged(nickname, avatarPath) {
+        document.getElementById("nicknameInputText").value = nickname
+        document.getElementById("avatarImage").src = avatarPath
+    }
+
+    function onAvatarChanged(avatarPath) {
+        document.getElementById("avatarImage").src = avatarPath
+    }
+
+    /*
+     * The Ayoba native interface calls this method every time
+     * the user nickname changes : in discovery context
+     */
+    function onNicknameChanged(nickname) {
+        document.getElementById("nicknameInputText").value = nickname
+    }
+
+    /*
+     * The Ayoba native interface calls this method every time
+     * the user presence changes (infact, always online)
+     */
+    function onPresenceChanged(presence) {
+        document.getElementById("presenceInputText").value = presence
+    }
+
+    /*
+     * This method should be implemented to retrieve the "sendMedia(...)" result
+     *
+     * @param {int} responseCode: result code
+     *  0: the location could not be sent
+     *  1: the location has been sent successfully
+     * @param encodedUrl: Base64 encoded media file’s url
+     */
+    function onMediaSentResponse(responseCode, encodedUrl) {
+        document.getElementById("inputText").value = responseCode.concat(" - ").concat(encodedUrl)
+        if (responseCode == 1) {
+            Ayoba.finish()
+        }
+    }
+
+    /*
+     * This method should be implemented to retrieve the "sendLocation(...)" result
+     *
+     * @param {int} responseCode: result code
+     *  0: the location could not be sent
+     *  1: the location has been sent successfully
+     */
+    function onLocationSentResponse(responseCode) {
+        document.getElementById("inputText").value = responseCode
+    }
+
+    function takePicture() {
+        var responseCode = Ayoba.takePicture();
+        return responseCode;
+    }
+
+    /*
+     * This method should be implemented to retrieve the "sendPicture(...)" result
+     *
+     * @param {int} responseCode: result code
+     *  0: the picture could not be taken
+     *  1: the picture has been taken successfully
+     */
+    function onPictureRetrievedResponse(responseCode, picturePath) {
+        document.getElementById("inputText").value = responseCode
+        document.getElementById("pictureRetrieved").src = picturePath
+    }
+
+    /*
+     * Starts a conversation with a user using his JID
+     */
+    function startConversation() {
+        Ayoba.startConversation('07aaf1be5b25b7c8c6a89159bc849e1d37ca7d1c@dev.ayoba.me');
+    }
+
+    function getFile() {
+        var responseCode = Ayoba.getFile();
+        return responseCode;
+    }
+
+    /*
+     * This method should be implemented to retrieve the "sendFileRetrievedResponse(...)" result
+     *
+     * @param {int} responseCode: result code
+     *  -1: the file could not be retrieved
+     *  1: the file has retrieved successfully
+     * @param {String} filePath: user selected files paths array
+     */
+    function onFileRetrievedResponse(responseCode, filePath) {
+        document.getElementById("inputText").value = responseCode.concat(" - ").concat(filePath)
+        document.getElementById("pictureRetrieved").src = filePath
     }
 </script>
 
-<body style="background-color:#fff;">
-    <img src="logo.jpg" style="width:200pxpx;" />
-    <div class="package-container">
-        <h2>To Subscribe to Lucky Number, Select the package that works for you</h2>
-        <div class="price-container">
-            <form id="price-points">
-                <label class="label-container">
-                        ₦50
-                <input type="radio" id="r2" value="50" name="radio" checked/>
-                <span class="checkmark"></span>
-                </label>
-                <label class="label-container">
-                        ₦10
-                <input type="radio" id="r3" value="10" name="radio"/>
-                <span class="checkmark"></span>
-                </label>
-                <div class="btn-container">
-                    <div class="center">
-                        <input type="button" class="button" onclick="getPricePoints()" value="Submit" />
-                    </div>
-                </div>
-            </form>
-        </div>
+<body style="background-color:#1565c0;">
+    <center>
+        <font color="#ffc107">Example Micro App - Mid Screen</font>
+    </center>
+    <br />
+    <div style="text-align:center;">
+        <input type="text" id="inputText">
+    </div>
+    <br />
+    <div style="text-align:center;">
+        Location:
+        <input type="text" id="locationInputText">
+    </div>
+    <div style="text-align:center;">
+        Profile:
+        <input type="text" id="nicknameInputText">
+    </div>
+    <div style="text-align:center;">
+        Presence:
+        <input type="text" id="presenceInputText">
+    </div>
+    <img src="logo.png" style="width:72px;" />
+    <br />
+    <img style="width:72px;" id="avatarImage" />
+    <br />
+    <img style="width:72px;" id="pictureRetrieved" />
+    <br />
+    <div style="text-align:center;">
+        <input type="button" value="Send message" onClick="sendMessage()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Compose message" onClick="composeMessage()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Finish" onClick="finish()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Send media" onClick="sendMedia()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="text" id="inputTextLat" size="10">
+        <input type="text" id="inputTextLon" size="10">
+        <input type="button" value="Send location" onClick="sendLocation()" />
+    </div>
+    <br />
+    <div style="text-align:center;">
+        <input type="button" value="Get MSISDN" onClick="getMsisdn()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get Country" onClick="getCountry()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get SelfJid" onClick="getSelfJid()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get ContactJid" onClick="getContactJid()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get ContactName" onClick="getContactName()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get CanSendMessage" onClick="getCanSendMessage()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get Language" onClick="getLanguage()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get Contacts" onClick="getContacts()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="Get Last Text Messages" onClick="getLastTextMessages()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="takePicture" onClick="takePicture()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="startConversation" onClick="startConversation()" />
+    </div>
+    <div style="text-align:center;">
+        <input type="button" value="getFile" onClick="getFile()" />
     </div>
 </body>
 

@@ -169,44 +169,43 @@
 </head>
 <script src="./lib/microapp.js"></script>
 <script type="text/javascript">
-    // function getMsisdn() {
-    //     // var msisdn = Ayoba.getMsisdn();
-    //     var msisdn = '234';
-    //     alert(msisdn);
-    //     return msisdn
-    // }
+    function getMsisdn() {
+        var msisdn = Ayoba.getMsisdn();
+        document.getElementById("inputText").value = msisdn;
+        return msisdn;
+    }
 
     async function getPricePoints() {
-        var msisdn = Ayoba.getMsisdn();
-        // var msisdn = '234';
-        alert(msisdn);
+        // var msisdn = Ayoba.getMsisdn();
+        // // var msisdn = '234';
+        // alert(msisdn);
 
-        console.log(msisdn);
+        // console.log(msisdn);
+        var msisdn = getMsisdn();
 
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
-        alert(selectedValue)
-            // await fetch(`https://micro-app-be.herokuapp.com/api/v1/subscribes`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'cpid': 11,
-            //         'x-token': 'NJ06A666-741F-484E-AEC9-8B91D2CP',
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         'msisdn': msisdn.toString(),
-            //         'ServiceID': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
-            //         'ChannelID': "105"
-            //     })
-            // }).then((data) => {
-            //     return data.json();
-            // }).then((data) => {
-            //     if (data.status === 400) {
-            //         alert('Unable to subscribe, Try Later');
-            //     }
-            //     alert('Successful, Kindly accept Auto Renew')
+        // await fetch(`https://micro-app-be.herokuapp.com/api/v1/subscribes`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'cpid': 11,
+        //         'x-token': 'NJ06A666-741F-484E-AEC9-8B91D2CP',
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         'msisdn': msisdn.toString(),
+        //         'ServiceID': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
+        //         'ChannelID': "105"
+        //     })
+        // }).then((data) => {
+        //     return data.json();
+        // }).then((data) => {
+        //     if (data.status === 400) {
+        //         alert('Unable to subscribe, Try Later');
+        //     }
+        //     alert('Successful, Kindly accept Auto Renew')
 
         // }).catch(function(error) {
         //     console.log('Looks like there was a problem: \n', error);
@@ -216,6 +215,9 @@
 
 <body style="background-color:#fff;">
     <img src="logo.jpg" style="width:200pxpx;" />
+    <div style="text-align:center; margin-top: 300px;">
+        <input type="text" id="inputText">
+    </div>
     <div class="package-container">
         <h2>To Subscribe to Lucky Number, Select the package that works for you</h2>
         <div class="price-container">

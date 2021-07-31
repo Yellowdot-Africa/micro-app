@@ -21,7 +21,7 @@
         }
         
         input[type=text] {
-            border: 1px solid #ffcb06;
+            border: 1px solid #ffe278;
             border-radius: 3px;
             padding-left: 0.5rem;
             min-width: 15rem;
@@ -31,7 +31,7 @@
         
         h2 {
             text-align: center;
-            margin-left: 68px;
+            /* margin-left: 68px; */
         }
         
         .btn-container {
@@ -78,11 +78,16 @@
         
         @media (max-width: 768px) {
             .package-container {
-                width: 130%;
+                width: 100%;
                 z-index: 0;
             }
             .checkmark {
                 left: 0;
+            }
+            .display-container {
+                width: 100%;
+                /* text-align: center;
+            color: white; */
             }
         }
         
@@ -165,14 +170,21 @@
             border-radius: 50%;
             background: white;
         }
+        
+        .display-container {
+            background: #ffcb06;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
     </style>
 </head>
 <script src="./lib/microapp.js"></script>
 <script type="text/javascript">
     async function getPricePoints() {
-        let msisdn = Ayoba.getMsisdn();
+        let msisdn = '234567890';
 
-        let display = document.getElementById('display').innerHTML;
+        // let display = document.getElementById('display').innerHTML;
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
@@ -192,7 +204,8 @@
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            data.response.status === 200 ? alert('successful, kindly select Accept Renewal to qualify') : alert('Unable to subscribe, Try Later')
+            console.log(data);
+            data.response.status === 200 ? document.getElementById('display').innerHTML = 'successful, kindly select Accept Renewal to qualify' : document.getElementById('display').innerHTML = 'Unable to subscribe, Try Later'
 
         }).catch(function(error) {
             console.log('Looks like there was a problem: \n', error);
@@ -201,7 +214,10 @@
 </script>
 
 <body style="background-color:#fff;">
-    <img src="logo.jpg" style="width:200pxpx;" />
+    <img src="logo.jpg" style="width:200px;" />
+    <div class="display-container">
+        <p id="display"></p>
+    </div>
     <div class="package-container">
         <h2>To Subscribe to Lucky Number, Select the package that works for you</h2>
         <div class="price-container">

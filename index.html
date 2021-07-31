@@ -169,19 +169,10 @@
 </head>
 <script src="./lib/microapp.js"></script>
 <script type="text/javascript">
-    function getMsisdn() {
-        var msisdn = Ayoba.getMsisdn();
-        return msisdn;
-    }
-
     async function getPricePoints() {
-        // var msisdn = Ayoba.getMsisdn();
-        // // var msisdn = '234';
-        // alert(msisdn);
+        let msisdn = Ayoba.getMsisdn();
 
-        var msisdn = getMsisdn();
-        // console.log(msisdn);
-
+        let display = document.getElementById('display').innerHTML;
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
@@ -201,11 +192,7 @@
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            if (data.status === 400) {
-                alert('Unable to subscribe, Try Later');
-            }
-            // alert('Successful, Kindly accept Auto Renew');
-            document.getElementById('display').innerHTML = 'Successful, Kindly accept Auto Renew';
+            data.response.status === 200 ? alert('Successful, Kindly accept Auto Renew') : alert('Unable to subscribe, Try Later')
 
         }).catch(function(error) {
             console.log('Looks like there was a problem: \n', error);
@@ -237,7 +224,6 @@
             </form>
         </div>
     </div>
-    <p id='display'></p>
 </body>
 
 </html>

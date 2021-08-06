@@ -175,14 +175,68 @@
             background: #ffcb06;
             width: 100%;
             text-align: center;
-            color: white;
+            color: black;
         }
+        
+        .fade-out {
+            opacity: 0;
+            animation: fadeOut ease 30s;
+            /* -webkit-animation: fadeOut ease 20s;
+            -moz-animation: fadeOut ease 20s;
+            -o-animation: fadeOut ease 20s;
+            -ms-animation: fadeOut ease 20s; */
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        /* @-moz-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        @-webkit-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        @-o-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        @-ms-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        } */
     </style>
 </head>
 <script src="./lib/microapp.js"></script>
 <script type="text/javascript">
     async function getPricePoints() {
         let msisdn = Ayoba.getMsisdn();
+        // let msisdn = '234123456789';
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
@@ -202,7 +256,7 @@
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            data.response.status === 200 ? document.getElementById('display').innerHTML = 'successful, kindly select Accept Renewal to qualify' : document.getElementById('display').innerHTML = 'Unable to subscribe, Try Later'
+            data.response.status === 200 ? document.getElementById('display').innerText = 'Successful, kindly select "Accept Renewal" to qualify' : document.getElementById('display').innerText = 'Unable to subscribe, Try Later'
 
         }).catch(function(error) {
             console.log('Looks like there was a problem: \n', error);
@@ -212,7 +266,7 @@
 
 <body style="background-color:#fff;">
     <img src="logo.jpg" style="width:200px;" />
-    <div class="display-container">
+    <div class="display-container fade-out">
         <p id="display"></p>
     </div>
     <div class="package-container">

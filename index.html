@@ -256,7 +256,6 @@
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            console.log(data)
             data.response.status === 200 ? document.getElementById('display').innerText = 'Successful, kindly select "Accept Renewal" to qualify' : document.getElementById('display').innerText = 'Unable to subscribe, Try Later'
 
         }).catch(function(error) {

@@ -45,7 +45,7 @@
             top: 50%;
             left: 50%;
             -ms-transform: translate(-50%, -50%);
-            transform: translate(-40%, -50%);
+            transform: translate(-49%, -50%);
         }
         
         .button {
@@ -132,7 +132,7 @@
         .checkmark {
             position: absolute;
             top: 0;
-            left: 77px;
+            left: 48px;
             height: 25px;
             width: 25px;
             background-color: #eee;
@@ -236,7 +236,7 @@
 <script type="text/javascript">
     async function getPricePoints() {
         let msisdn = Ayoba.getMsisdn();
-        // let msisdn = '234123456789';
+        // let msisdn = "2347063043582";
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
@@ -250,12 +250,13 @@
             },
             body: JSON.stringify({
                 'msisdn': msisdn.toString(),
-                'ServiceID': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
-                'ChannelID': "105"
+                'serviceid': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
+                'channel': "SMS"
             })
         }).then((data) => {
             return data.json();
         }).then((data) => {
+            console.log(data)
             data.response.status === 200 ? document.getElementById('display').innerText = 'Successful, kindly select "Accept Renewal" to qualify' : document.getElementById('display').innerText = 'Unable to subscribe, Try Later'
 
         }).catch(function(error) {

@@ -235,8 +235,8 @@
 <script src="./lib/microapp.js"></script>
 <script type="text/javascript">
     async function getPricePoints() {
-        let msisdn = Ayoba.getMsisdn();
-        // let msisdn = "2347063043582";
+        let msisdn = "2347063043582";
+        // let msisdn = Ayoba.getMsisdn();
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
@@ -256,6 +256,7 @@
         }).then((data) => {
             return data.json();
         }).then((data) => {
+            console.log(data)
             data.response.status === 200 ? document.getElementById('display').innerText = 'Successful, kindly select "Accept Renewal" to qualify' : document.getElementById('display').innerText = 'Unable to subscribe, Try Later'
 
         }).catch(function(error) {
@@ -266,7 +267,7 @@
 
 <body style="background-color:#fff;">
     <img src="logo.jpg" style="width:200px;" />
-    <div class="display-container fade-out">
+    <div class="display-container">
         <p id="display"></p>
     </div>
     <div class="package-container">

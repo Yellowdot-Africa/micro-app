@@ -197,7 +197,7 @@
         }
         
         #myDiv {
-            display: none;
+            /* display: none; */
             text-align: center;
         }
         
@@ -231,12 +231,12 @@
     async function getPricePoints() {
         revealLoader();
         loaderTime();
-        let msisdn = Ayoba.getMsisdn();
-        // let msisdn = "2347048130055";
+        // let msisdn = Ayoba.getMsisdn();
+        let msisdn = "2347048130055";
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
-        let display = document.getElementById('display').innerText;
+        let display = document.getElementById('notification').innerText;
         await fetch(`https://micro-app-be.herokuapp.com/api/v1/subscribe`, {
             method: 'POST',
             headers: {
@@ -253,7 +253,7 @@
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            data.response.status === 200 ? document.getElementById('display').innerText = 'Successful, kindly select "Accept Renewal" to qualify' : data.response.status === 403 ? document.getElementById('display').innerText = data.response.msg : document.getElementById('display').innerText = 'Unable to subscribe, Try Later'
+            data.response.status === 200 ? document.getElementById('notification').innerText = 'Successful, kindly select "Accept Renewal" to qualify' : data.response.status === 403 ? document.getElementById('notification').innerText = data.response.msg : document.getElementById('notification').innerText = 'Unable to subscribe, Try Later'
 
         }).catch(function(error) {
             console.log('Looks like there was a problem: \n', error);
@@ -279,8 +279,8 @@
 <body style="background-color:#fff;" id="body">
     <div id="loader" style="display:none;"></div>
     <img src="logo.jpg" style="width:200px;" />
-    <div class="display-container" style="display:none;" id="myDiv">
-        <p id="display"></p>
+    <div class="display-container" id="myDiv">
+        <p id="notification">Welcome!!!</p>
     </div>
     <div class="package-container">
         <h2>To Subscribe to Lucky Number, Select the package that works for you</h2>

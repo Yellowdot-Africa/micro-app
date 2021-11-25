@@ -246,7 +246,7 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'msisdn': msisdn.toString(),
+                'msisdn': msisdn,
                 'serviceid': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
                 'channel': "SMS"
             })
@@ -280,7 +280,7 @@
     <div id="loader" style="display:none;"></div>
     <img src="logo.jpg" style="width:200px;" />
     <div class="display-container" id="myDiv">
-        <p id="notification">Welcome!!!</p>
+        <p id="notification"></p>
     </div>
     <div class="package-container">
         <h2>To Subscribe to Lucky Number, Select the package that works for you</h2>

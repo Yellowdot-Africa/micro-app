@@ -231,7 +231,8 @@
     async function getPricePoints() {
         revealLoader();
         let msisdn = Ayoba.getMsisdn();
-        // let msisdn = "2347048130055";
+        msisdn = msisdn.substring(1);
+        // let msisdn = "+2347048130055";
         let serviceIdTen = "526";
         let serviceIdFifty = "322";
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
@@ -290,7 +291,7 @@
 
 <body style="background-color:#fff;" id="body">
     <div id="loader" style="display:none;"></div>
-    <img src="/assets/img/logo.jpg" style="width:200px;" />
+    <img src="/micro-app/assets/img/logo.jpg" style="width:200px;" />
     <div class="display-container" id="myDiv">
         <p id="notification"></p>
     </div>
@@ -317,7 +318,7 @@
                 </div>
             </form>
         </div>
-        <a href="https://luckynumberng.com/terms-and-conditions/" style="text-decoration: underline; color: #000000;">T&Cs</a>
+        <a href="/micro-app/assets/terms-conditions.html" style="text-decoration: underline; color: #000000;">T&Cs</a>
     </div>
 </body>
 

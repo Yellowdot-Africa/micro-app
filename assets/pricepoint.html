@@ -233,34 +233,36 @@
         let msisdn = Ayoba.getMsisdn();
         msisdn = msisdn.substring(1);
         // let msisdn = "2347048130055";
-        let serviceIdTen = "526";
-        let serviceIdFifty = "322";
+        let serviceIdTen = '4';
+        let serviceIdFifty = '3';
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
         let display = document.getElementById('notification').innerText;
         await fetch(`https://micro-app-be.herokuapp.com/api/v1/subscribe`, {
             method: 'POST',
             headers: {
-                'cpid': 11,
-                'x-token': 'NJ06A666-741F-484E-AEC9-8B91D2CP',
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                'pisipid': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
                 'msisdn': msisdn,
-                'serviceid': selectedValue === "10" ? serviceIdTen : selectedValue === "50" ? serviceIdFifty : serviceIdFifty,
-                'channel': "SMS"
+                'channel': "WEB"
             })
         }).then((data) => {
             return data.json();
         }).then((data) => {
-            if (data.response.status === 200) {
+            if (data.status === 200) {
                 hideLoader();
-                document.getElementById('notification').innerText = 'Successful, kindly select "Accept Renewal" to qualify';
+                document.getElementById('notification').innerText = data.msg.message;
                 return;
             }
-            if (data.response.status === 403) {
+            if (data.status === 400) {
                 hideLoader();
-                document.getElementById('notification').innerText = data.response.msg;
+                document.getElementById('notification').innerText = data.msg.message;
+                return;
+            }
+            if (data.status === 403) {
+                hideLoader();
+                document.getElementById('notification').innerText = data.msg;
                 return;
             } else {
                 hideLoader();
@@ -292,10 +294,14 @@
 <body style="background-color:#fff;" id="body">
     <div id="loader" style="display:none;"></div>
     <img src="/micro-app/assets/img/logo.jpg" style="width:200px;" />
-    <div class="display-container" id="myDiv">
+    <!-- <div class="display-container" id="myDiv">
+        <h1>Hello</h1>
         <p id="notification"></p>
-    </div>
+    </div> -->
     <div class="package-container">
+        <div class="display-container" id="myDiv">
+            <p id="notification"></p>
+        </div>
         <h4>Lucky number is a daily draw game where winners phone numbers must match the drawn number for the day.</h4>
         <div class="price-container">
             <form id="price-points">

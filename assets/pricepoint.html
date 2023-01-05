@@ -231,13 +231,13 @@
     async function getPricePoints() {
         revealLoader();
         let msisdn = Ayoba.getMsisdn();
-        msisdn = msisdn.substring(1);
+        // msisdn = msisdn.substring(1);
         // let msisdn = "2347048130055";
         let serviceIdTen = '4';
         let serviceIdFifty = '3';
         let selectedValue = document.querySelector('input[name="radio"]:checked').value;
         let display = document.getElementById('notification').innerText;
-        await fetch(`https://micro-app-be.herokuapp.com/api/v1/subscribe`, {
+        await fetch(`http://45.35.73.141:4011/api/v1/subscribe`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -256,6 +256,7 @@
                 return;
             }
             if (data.status === 400) {
+                console.log(data);
                 hideLoader();
                 document.getElementById('notification').innerText = data.msg;
                 return;
